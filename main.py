@@ -5,7 +5,12 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 
 # Connect to Firestore
-cred = credentials.Certificate("serviceAccountKey.json")
+import json
+import os
+
+# Load Firebase Key from GitHub Secret
+firebase_key = json.loads(os.environ['FIREBASE_KEY'])
+cred = credentials.Certificate(firebase_key)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
