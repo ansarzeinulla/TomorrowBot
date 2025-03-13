@@ -1,12 +1,11 @@
-from telegram.ext import Updater, CommandHandler
+from telegram import Update
+from telegram.ext import Application, CommandHandler, ContextTypes
 
-def start(update, context):
-    update.message.reply_text('Hello! I am your bot.')
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('Hello! I am your bot.')
 
-updater = Updater(token='7859858304:AAEa-Cn-DZ1ldYDwes_K0w6fuh847WFcFOs', use_context=True)
-dispatcher = updater.dispatcher
+app = Application.builder().token('7859858304:AAEa-Cn-DZ1ldYDwes_K0w6fuh847WFcFOs').build()
 
-dispatcher.add_handler(CommandHandler('start', start))
+app.add_handler(CommandHandler('start', start))
 
-updater.start_polling()
-updater.idle()
+app.run_polling()
