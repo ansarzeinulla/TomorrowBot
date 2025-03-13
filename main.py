@@ -29,17 +29,19 @@ async def show_data(update, context):
 
     result = ""
     
-    # Loop through each user in Firestore
     for doc in docs:
         user = doc.to_dict()
-        
-        # Check if the attribute `is_here` is True
         if user.get('is_here'):
             result += f"👤 {user['nick']} | {user['tgnick']} | {user['name']}\n"
 
-    # Send data in smaller messages to avoid the 4096 character limit
+    # ✅ Answer the callback first to stop the "Loading..."
+    await update.callback_query.answer()
+
+    # ✅ Then send data in smaller messages
     for i in range(0, len(result), 4000):
         await update.callback_query.message.reply_text(result[i:i + 4000])
+
+        
 # Main Application
 app = Application.builder().token(BOT_TOKEN).build()
 
