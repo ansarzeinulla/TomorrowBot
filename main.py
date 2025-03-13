@@ -39,7 +39,7 @@ async def show_data(update, context):
     
     for doc in docs_list:
         user = doc.to_dict()
-        if user.get('is_here'):
+        if user.get('ishere'):
             result += f"👤 {user['nick']} | {user['tgnick']} | {user['name']}\n"
 
     # ✅ Answer the callback first to stop the "Loading..."
