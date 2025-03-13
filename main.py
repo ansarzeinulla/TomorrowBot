@@ -1,4 +1,3 @@
-
 import firebase_admin
 from firebase_admin import credentials, firestore
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
@@ -9,13 +8,16 @@ import json
 import os
 
 # Load Firebase Key from GitHub Secret
-firebase_key = json.loads(os.environ['FIREBASE_KEY'])
+firebase_key = os.getenv('FIREBASE_KEY')  # ✅ Instead of json.loads
+if firebase_key:
+    firebase_key = json.loads(firebase_key)
+
 cred = credentials.Certificate(firebase_key)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Telegram Bot Token
-BOT_TOKEN = "7859858304:AAEa-Cn-DZ1ldYDwes_K0w6fuh847WFcFOs"
+BOT_TOKEN = os.getenv("BOT_TOKEN")  # ✅ Token from GitHub Secret
 
 # Start Command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
