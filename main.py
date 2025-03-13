@@ -68,8 +68,8 @@ app = Application.builder().token(BOT_TOKEN).build()
 
 # Handlers
 app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(show_who_is_here))
-app.add_handler(CallbackQueryHandler(show_events))
+app.add_handler(CallbackQueryHandler(show_who_is_here, pattern="show_who_is_here"))
+app.add_handler(CallbackQueryHandler(show_events, pattern="show_events"))
 
 # Run the Bot
 app.run_polling()
