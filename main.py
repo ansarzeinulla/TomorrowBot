@@ -29,9 +29,15 @@ async def show_data(update, context):
     users_ref = db.collection('users')  # Firebase /users reference
     docs = users_ref.stream()
 
+    docs_list = list(docs)  # Convert to list to count
+    num_users = len(docs_list)
+
+    # Send the number of users to the user
+    await update.callback_query.message.reply_text(f"Number of users: {num_users}")
+
     result = ""
     
-    for doc in docs:
+    for doc in docs_list:
         user = doc.to_dict()
         if user.get('is_here'):
             result += f"👤 {user['nick']} | {user['tgnick']} | {user['name']}\n"
@@ -42,7 +48,6 @@ async def show_data(update, context):
     # ✅ Then send data in smaller messages
     for i in range(0, len(result), 4000):
         await update.callback_query.message.reply_text(result[i:i + 4000])
-
         
 # Main Application
 app = Application.builder().token(BOT_TOKEN).build()
